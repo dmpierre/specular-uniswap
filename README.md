@@ -6,4 +6,4 @@ Deploying Uniswap V2 contracts on Specular. `deploy` contains all necessary scri
 
 1. Populate a `.env` file following `.env-example`
 2. Run `yarn hardhat deploy --network specular`
-3. `swap` hardhat task is available for swapping `ERCA` with `ERCB`: `yarn hardhat swap --network specular --amount amountAforB`
+3. `swap` hardhat task is available for swapping `WETH`, `ERCA` or `ERCB` tokens.
