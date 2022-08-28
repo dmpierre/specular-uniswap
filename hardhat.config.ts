@@ -11,13 +11,24 @@ import assert from 'assert';
 
 const deployerWallet = process.env[ "PK" ] ? new ethers.Wallet(process.env[ "PK" ]) : ethers.Wallet.createRandom();
 
+task("mintWETH", "Mint WETH to your address. Ensure you have ETH first. You can get some from specular faucet")
+  .addParam("amount", "in ETH")
+  .setAction(async ({ amount }, hre) => {
+    const { deployer } = await hre.getNamedAccounts();
+    const deployedWETH = await hre.ethers.getContract("WETH");
+    const txDeposit = await deployedWETH.deposit({
+      value: hre.ethers.utils.parseEther(`${amount}`)
+    });
+    console.log(txDeposit);
+  });
+
 task("swap", "Swap ERC20A for ERC20B")
   .addParam("token1")
   .addParam("token2")
   .addParam("amount", "in ETH")
   .setAction(async ({ amount, token1, token2 }, hre) => {
     const acceptedTokens = [ "WETH", "ERC20A", "ERC20B" ];
-    
+
     assert(acceptedTokens.includes(token1));
     assert(acceptedTokens.includes(token2));
     assert(token1 != token2);
